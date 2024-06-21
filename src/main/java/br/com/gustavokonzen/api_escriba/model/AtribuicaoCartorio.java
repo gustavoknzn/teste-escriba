@@ -1,13 +1,18 @@
 package br.com.gustavokonzen.api_escriba.model;
 
+import br.com.gustavokonzen.api_escriba.dto.AtribuicaoCartorioDTO;
+import br.com.gustavokonzen.api_escriba.dto.CartorioDTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "TB_ATRIBUICAO_CARTORIO")
 public class AtribuicaoCartorio implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -21,6 +26,10 @@ public class AtribuicaoCartorio implements Serializable {
 
     @Override
     public String toString() {
-        return "Atribuição: " + getNome();
+        return "Código: " + getId() + "Nome: " + getNome();
+    }
+
+    public AtribuicaoCartorioDTO toDto(){
+        return new AtribuicaoCartorioDTO(this.id, this.nome);
     }
 }

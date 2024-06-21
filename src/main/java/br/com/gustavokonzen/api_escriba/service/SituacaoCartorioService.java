@@ -1,8 +1,12 @@
 package br.com.gustavokonzen.api_escriba.service;
 
+import br.com.gustavokonzen.api_escriba.dto.AtribuicaoCartorioDTO;
+import br.com.gustavokonzen.api_escriba.dto.SituacaoCartorioDTO;
 import br.com.gustavokonzen.api_escriba.model.SituacaoCartorio;
 import br.com.gustavokonzen.api_escriba.repository.SituacaoCartorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +18,9 @@ public class SituacaoCartorioService {
     @Autowired
     private SituacaoCartorioRepository situacaoCartorioRepository;
 
-    public List<SituacaoCartorio> listarTodos() {
-        return situacaoCartorioRepository.findAll();
+    public List<SituacaoCartorioDTO> listarTodos(Pageable pageable) {
+        var situacaoCartorios = situacaoCartorioRepository.findAll(pageable).getContent();
+        return SituacaoCartorioDTO.converter(situacaoCartorios);
     }
 
     public Optional<SituacaoCartorio> buscarPorId(String id) {

@@ -1,7 +1,11 @@
 package br.com.gustavokonzen.api_escriba.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.gustavokonzen.api_escriba.dto.CartorioDTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +13,8 @@ import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "TB_CARTORIO")
 public class Cartorio implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -35,6 +41,10 @@ public class Cartorio implements Serializable {
 
     @Override
     public String toString() {
-        return "Cartorio: " + getNome();
+        return "Código: " + getId() + "Nome: " + getNome();
+    }
+
+    public CartorioDTO toDto(){
+        return new CartorioDTO(this.id, this.nome);
     }
 }

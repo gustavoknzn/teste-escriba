@@ -20,6 +20,6 @@ public class SituacaoCartorio implements Serializable {
 
     @Override
     public String toString() {
-        return "Situação: " + getNome();
+        return "Código: " + getId() + "Nome: " + getNome();
     }
 }

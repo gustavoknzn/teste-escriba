@@ -1,6 +1,9 @@
 package br.com.gustavokonzen.api_escriba.controller;
 
+import br.com.gustavokonzen.api_escriba.annotation.ApiPageableSwagger2;
+import br.com.gustavokonzen.api_escriba.dto.AtribuicaoCartorioDTO;
 import br.com.gustavokonzen.api_escriba.model.AtribuicaoCartorio;
+import br.com.gustavokonzen.api_escriba.model.Cartorio;
 import br.com.gustavokonzen.api_escriba.service.AtribuicaoCartorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +23,10 @@ public class AtribuicaoCartorioController {
     private AtribuicaoCartorioService atribuicaoCartorioService;
 
     @GetMapping
-    public ResponseEntity<List<AtribuicaoCartorio>> listarTodos(@PageableDefault(size = 10) Pageable pageable) {
-        List<AtribuicaoCartorio> atribuicoes = atribuicaoCartorioService.listarTodos(pageable).getContent();
-        return ResponseEntity.ok(atribuicoes);
+    @ApiPageableSwagger2
+    public ResponseEntity<List<AtribuicaoCartorioDTO>> listarTodos(@ApiIgnore @PageableDefault(size = 10) Pageable pageable) {
+        var atribuicaoCartorios = atribuicaoCartorioService.listarTodos(pageable);
+        return ResponseEntity.ok(atribuicaoCartorios);
     }
 
     @GetMapping("/{id}")
@@ -38,9 +42,20 @@ public class AtribuicaoCartorioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(atribuicaoCriada);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<AtribuicaoCartorio> atualizar(@PathVariable String id, @RequestBody AtribuicaoCartorio atribuicaoCartorioAtualizado) {
+        AtribuicaoCartorio atribuicaoCartorio = atribuicaoCartorioService.atualizar(id, atribuicaoCartorioAtualizado);
+        return ResponseEntity.ok(atribuicaoCartorio);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
-        atribuicaoCartorioService.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deletar(@PathVariable String id) {
+        Optional<AtribuicaoCartorio> atribuicaoCartorio = atribuicaoCartorioService.buscarPorId(id);
+        if (atribuicaoCartorio.isPresent()){
+            atribuicaoCartorioService.deletar(id);
+            return ResponseEntity.ok().body("Atribuição: " + id + " excluída com sucesso!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Atribuição: " + id + " não encontrada!");
+        }
     }
 }
