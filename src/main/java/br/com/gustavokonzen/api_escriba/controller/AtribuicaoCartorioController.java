@@ -3,6 +3,8 @@ package br.com.gustavokonzen.api_escriba.controller;
 import br.com.gustavokonzen.api_escriba.model.AtribuicaoCartorio;
 import br.com.gustavokonzen.api_escriba.service.AtribuicaoCartorioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class AtribuicaoCartorioController {
     private AtribuicaoCartorioService atribuicaoCartorioService;
 
     @GetMapping
-    public ResponseEntity<List<AtribuicaoCartorio>> listarTodos() {
-        List<AtribuicaoCartorio> atribuicoes = atribuicaoCartorioService.listarTodos();
+    public ResponseEntity<List<AtribuicaoCartorio>> listarTodos(@PageableDefault(size = 10) Pageable pageable) {
+        List<AtribuicaoCartorio> atribuicoes = atribuicaoCartorioService.listarTodos(pageable).getContent();
         return ResponseEntity.ok(atribuicoes);
     }
 

@@ -5,9 +5,12 @@ import br.com.gustavokonzen.api_escriba.model.SituacaoCartorio;
 import br.com.gustavokonzen.api_escriba.service.CartorioService;
 import br.com.gustavokonzen.api_escriba.service.SituacaoCartorioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +23,8 @@ public class CartorioController {
     private CartorioService cartorioService;
 
     @GetMapping
-    public ResponseEntity<List<Cartorio>> listarTodos() {
-        List<Cartorio> cartorios = cartorioService.listarTodos();
+    public ResponseEntity<List<Cartorio>> listarTodos(@ApiIgnore @PageableDefault(size = 10) Pageable pageable) {
+        List<Cartorio> cartorios = cartorioService.listarTodos(pageable).getContent();
         return ResponseEntity.ok(cartorios);
     }
 
