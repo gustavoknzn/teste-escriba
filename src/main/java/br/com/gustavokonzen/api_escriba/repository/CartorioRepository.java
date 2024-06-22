@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CartorioRepository extends JpaRepository<Cartorio, Integer> {
+        Cartorio findByNome(String s);
 }

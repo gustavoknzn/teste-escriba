@@ -3,7 +3,6 @@ package br.com.gustavokonzen.api_escriba.controller;
 import br.com.gustavokonzen.api_escriba.annotation.ApiPageableSwagger2;
 import br.com.gustavokonzen.api_escriba.dto.AtribuicaoCartorioDTO;
 import br.com.gustavokonzen.api_escriba.model.AtribuicaoCartorio;
-import br.com.gustavokonzen.api_escriba.model.Cartorio;
 import br.com.gustavokonzen.api_escriba.service.AtribuicaoCartorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,13 +38,13 @@ public class AtribuicaoCartorioController {
     }
 
     @PostMapping
-    public ResponseEntity<AtribuicaoCartorio> criar(@RequestBody AtribuicaoCartorio atribuicaoCartorio) {
+    public ResponseEntity<AtribuicaoCartorio> criar(@Valid @RequestBody AtribuicaoCartorio atribuicaoCartorio) {
         AtribuicaoCartorio atribuicaoCriada = atribuicaoCartorioService.salvar(atribuicaoCartorio);
         return ResponseEntity.status(HttpStatus.CREATED).body(atribuicaoCriada);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AtribuicaoCartorio> atualizar(@PathVariable String id, @RequestBody AtribuicaoCartorio atribuicaoCartorioAtualizado) {
+    public ResponseEntity<AtribuicaoCartorio> atualizar(@PathVariable String id, @Valid @RequestBody AtribuicaoCartorio atribuicaoCartorioAtualizado) {
         AtribuicaoCartorio atribuicaoCartorio = atribuicaoCartorioService.atualizar(id, atribuicaoCartorioAtualizado);
         return ResponseEntity.ok(atribuicaoCartorio);
     }
@@ -51,7 +52,7 @@ public class AtribuicaoCartorioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable String id) {
         Optional<AtribuicaoCartorio> atribuicaoCartorio = atribuicaoCartorioService.buscarPorId(id);
-        if (atribuicaoCartorio.isPresent()){
+        if (atribuicaoCartorio.isPresent()) {
             atribuicaoCartorioService.deletar(id);
             return ResponseEntity.ok().body("Atribuição: " + id + " excluída com sucesso!");
         } else {

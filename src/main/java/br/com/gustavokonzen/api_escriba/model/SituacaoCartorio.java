@@ -3,6 +3,8 @@ package br.com.gustavokonzen.api_escriba.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
@@ -12,10 +14,14 @@ public class SituacaoCartorio implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @NotNull
+    @Size(max = 20, message = "O tamanho máximo do campo ID permitido é de 20 caracteres")
     @Column(length = 20, nullable = false)
     private String id;
 
     @Column(length = 50, nullable = false, unique = true)
+    @NotNull
+    @Size(max = 50, message = "O tamanho máximo do campo Nome permitido é de 50 caracteres")
     private String nome;
 
     @Override

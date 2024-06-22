@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,25 +38,20 @@ public class CartorioController {
     }
 
     @PostMapping
-    public ResponseEntity<Cartorio> criar(@RequestBody Cartorio cartorio) {
+    public ResponseEntity<Cartorio> criar(@Valid @RequestBody Cartorio cartorio) {
         Cartorio cartorioCriado = cartorioService.salvar(cartorio);
         return ResponseEntity.status(HttpStatus.CREATED).body(cartorioCriado);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cartorio> atualizar(@PathVariable int id, @RequestBody Cartorio cartorioAtualizado) {
+    public ResponseEntity<Cartorio> atualizar(@PathVariable int id, @Valid @RequestBody Cartorio cartorioAtualizado) {
         Cartorio cartorio = cartorioService.atualizar(id, cartorioAtualizado);
         return ResponseEntity.ok(cartorio);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable int id) {
-        Optional<Cartorio> cartorioDB = cartorioService.buscarPorId(id);
-        if (cartorioDB.isPresent()){
-            cartorioService.deletar(id);
-            return ResponseEntity.ok().body("Cartório: " + id + " excluído com sucesso!");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cartório: " + id + " não encontrado!");
-        }
+        cartorioService.deletar(id);
+        return ResponseEntity.ok().body("Cartório: " + id + " excluído com sucesso!");
     }
 }

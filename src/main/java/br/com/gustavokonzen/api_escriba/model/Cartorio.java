@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,17 +25,20 @@ public class Cartorio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Size(max = 150, message = "O tamanho máximo do campo Nome permitido é de 150 caracteres")
+    @NotNull
     @Column(length = 150, nullable = false)
     private String nome;
 
     @Column(length = 250)
+    @Size(max = 250, message = "O tamanho máximo do campo observação permitido é de 250 caracteres")
     private String observacao;
 
     @ManyToOne
     @JoinColumn(name = "situacao_id")
     private SituacaoCartorio situacao;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "TB_ATRIBUICAO_HAS_CARTORIO",
             joinColumns = @JoinColumn(name = "cartorio_id"),
             inverseJoinColumns = @JoinColumn(name = "atribuicao_id"))
@@ -41,7 +46,7 @@ public class Cartorio implements Serializable {
 
     @Override
     public String toString() {
-        return "Código: " + getId() + "Nome: " + getNome();
+        return "Código: " + getId() + " Nome: " + getNome();
     }
 
     public CartorioDTO toDto(){
