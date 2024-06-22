@@ -15,7 +15,9 @@ VALUES ('Cartório do Registro Civil da Paz', 'Observação do Cartório', 'SIT_
 
 INSERT INTO TB_ATRIBUICAO_HAS_CARTORIO (cartorio_id, atribuicao_id)
 VALUES (1, '1'),
+       (1, '2'),
        (2, '2'),
+       (2, '3'),
        (3, '3'),
        (4, '4'),
        (5, '5'),

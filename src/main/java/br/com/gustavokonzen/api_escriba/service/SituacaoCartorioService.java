@@ -43,6 +43,9 @@ public class SituacaoCartorioService {
             throw new CampoNaoEncontradoException("O campo 'Nome' é obrigatório");
         }
         var situacaoCartorioDB = situacaoCartorioRepository.findByNome(situacaoCartorio.getNome());
+        if(Objects.isNull(situacaoCartorioDB)){
+            return situacaoCartorioRepository.save(situacaoCartorio);
+        }
         if (situacaoCartorio.getId().equals(situacaoCartorioDB.getId())) {
             throw new RegistroDuplicadoException("Registro já cadastrado!");
         }

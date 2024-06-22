@@ -20,7 +20,6 @@ public class AtribuicaoCartorio implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @NotNull
     @Size(max = 20, message = "O tamanho máximo do campo ID permitido é de 20 caracteres")
     @Column(length = 20, nullable = false)
     private String id;
