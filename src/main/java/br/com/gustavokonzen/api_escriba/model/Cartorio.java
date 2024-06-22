@@ -4,8 +4,6 @@ import br.com.gustavokonzen.api_escriba.dto.CartorioDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -49,7 +47,7 @@ public class Cartorio implements Serializable {
         return "Código: " + getId() + " Nome: " + getNome();
     }
 
-    public CartorioDTO toDto(){
+    public CartorioDTO toDto() {
         return new CartorioDTO(this.id, this.nome);
     }
 }

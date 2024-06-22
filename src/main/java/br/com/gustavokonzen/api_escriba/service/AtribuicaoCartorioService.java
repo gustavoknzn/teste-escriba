@@ -41,13 +41,13 @@ public class AtribuicaoCartorioService {
             throw new CampoNaoEncontradoException("O campo 'Nome' é obrigatório");
         }
         var situacaoCartorioDB = atribuicaoCartorioRepository.findFirstByIdOrNome(atribuicaoCartorio.getId(), atribuicaoCartorio.getNome());
-        if (Objects.isNull(situacaoCartorioDB)){
+        if (Objects.isNull(situacaoCartorioDB)) {
             return atribuicaoCartorioRepository.save(atribuicaoCartorio);
         }
         if (atribuicaoCartorio.getId().equals(situacaoCartorioDB.getId())) {
             throw new RegistroDuplicadoException("Registro já cadastrado!");
         }
-        if (atribuicaoCartorio.getNome().equals(situacaoCartorioDB.getNome()) ) {
+        if (atribuicaoCartorio.getNome().equals(situacaoCartorioDB.getNome())) {
             throw new RegistroDuplicadoException("Nome já informado na atribuição: " + situacaoCartorioDB.getId());
         }
         return atribuicaoCartorioRepository.save(atribuicaoCartorio);
@@ -57,11 +57,11 @@ public class AtribuicaoCartorioService {
     public AtribuicaoCartorio atualizar(String id, AtribuicaoCartorio atribuicaoCartorioAtualizado) {
         var atribuicaoCartorioExistente = atribuicaoCartorioRepository.findByNome(atribuicaoCartorioAtualizado.getNome());
 
-        if(Objects.isNull(atribuicaoCartorioExistente)){
+        if (Objects.isNull(atribuicaoCartorioExistente)) {
             atribuicaoCartorioExistente = atribuicaoCartorioRepository.findById(id).get();
         }
 
-        if(atribuicaoCartorioExistente.getId() != id && atribuicaoCartorioExistente.getNome().equals(atribuicaoCartorioAtualizado.getNome())){
+        if (atribuicaoCartorioExistente.getId() != id && atribuicaoCartorioExistente.getNome().equals(atribuicaoCartorioAtualizado.getNome())) {
             throw new RegistroDuplicadoException("Nome já informado na atribuição: " + atribuicaoCartorioExistente.getId());
         }
 

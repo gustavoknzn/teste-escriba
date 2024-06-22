@@ -1,10 +1,8 @@
 package br.com.gustavokonzen.api_escriba.controller;
 
 import br.com.gustavokonzen.api_escriba.annotation.ApiPageableSwagger2;
-import br.com.gustavokonzen.api_escriba.dto.AtribuicaoCartorioDTO;
 import br.com.gustavokonzen.api_escriba.dto.SituacaoCartorioDTO;
 import br.com.gustavokonzen.api_escriba.dto.SituacaoCartorioRequestDTO;
-import br.com.gustavokonzen.api_escriba.model.AtribuicaoCartorio;
 import br.com.gustavokonzen.api_escriba.model.SituacaoCartorio;
 import br.com.gustavokonzen.api_escriba.service.SituacaoCartorioService;
 import org.springframework.beans.factory.annotation.Autowired;

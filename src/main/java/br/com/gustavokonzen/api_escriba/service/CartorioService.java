@@ -33,7 +33,7 @@ public class CartorioService {
 
     @Transactional
     public Cartorio salvar(Cartorio cartorio) {
-        if(Objects.isNull(cartorio)){
+        if (Objects.isNull(cartorio)) {
             throw new ErroNaoMapeadoException("Cartório não pode ser vazio");
         }
         if (cartorio.getNome().isEmpty()) {
@@ -50,10 +50,10 @@ public class CartorioService {
     public Cartorio atualizar(Integer id, Cartorio cartorioAtualizado) {
         var cartorioDB = cartorioRepository.findByNome(cartorioAtualizado.getNome());
 
-        if(Objects.isNull(cartorioDB)){
+        if (Objects.isNull(cartorioDB)) {
             cartorioDB = cartorioRepository.findById(id).get();
         }
-        if(cartorioDB.getId() != id && cartorioDB.getNome().equals(cartorioAtualizado.getNome())){
+        if (cartorioDB.getId() != id && cartorioDB.getNome().equals(cartorioAtualizado.getNome())) {
             throw new RegistroDuplicadoException("Nome já informado no cartório: " + cartorioDB.getId());
         }
         if (cartorioAtualizado.getNome() != null) {
