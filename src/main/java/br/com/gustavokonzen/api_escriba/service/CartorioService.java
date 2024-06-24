@@ -39,6 +39,12 @@ public class CartorioService {
         if (cartorio.getNome().isEmpty()) {
             throw new CampoNaoEncontradoException("O campo 'Nome' é obrigatório");
         }
+        if (Objects.isNull(cartorio.getSituacao())) {
+            throw new CampoNaoEncontradoException("O campo 'Situação' é obrigatório");
+        }
+        if (cartorio.getAtribuicaoCartorioList().isEmpty()) {
+            throw new CampoNaoEncontradoException("O campo 'Atribuição' é obrigatório");
+        }
         var cartorioDB = cartorioRepository.findByNome(cartorio.getNome());
         if (Objects.nonNull(cartorioDB) && cartorio.getNome().equals(cartorioDB.getNome())) {
             throw new RegistroDuplicadoException("Nome já informado no cartório: " + cartorioDB.getId());

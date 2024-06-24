@@ -40,6 +40,9 @@ public class AtribuicaoCartorioService {
         if (atribuicaoCartorio.getNome().isEmpty()) {
             throw new CampoNaoEncontradoException("O campo 'Nome' é obrigatório");
         }
+        if (atribuicaoCartorio.getSituacao() == null) {
+            throw new CampoNaoEncontradoException("O campo 'Situação' é obrigatório");
+        }
         var situacaoCartorioDB = atribuicaoCartorioRepository.findFirstByIdOrNome(atribuicaoCartorio.getId(), atribuicaoCartorio.getNome());
         if (Objects.isNull(situacaoCartorioDB)) {
             return atribuicaoCartorioRepository.save(atribuicaoCartorio);

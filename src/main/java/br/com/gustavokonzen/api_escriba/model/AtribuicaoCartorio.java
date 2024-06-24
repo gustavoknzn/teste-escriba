@@ -31,6 +31,10 @@ public class AtribuicaoCartorio implements Serializable {
     @Size(max = 50, message = "O tamanho máximo do campo Nome permitido é de 50 caracteres")
     private String nome;
 
+    @Column(nullable = false)
+    @NotNull
+    private Boolean situacao = true;
+
     @Override
     public String toString() {
         return "Código: " + getId() + "Nome: " + getNome();
